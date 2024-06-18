@@ -1,56 +1,62 @@
-import db from '../Database/index.js';
-
+import * as dao from "./dao.js";
+ 
 export default function QuestionsRoutes(app) {
-  // Create a new question
-  app.post('/api/courses/:cid/quizzes/:qid/questions', (req, res) => {
-    const { cid, qid } = req.params;
-    const newQuestion = {
-      ...req.body,
-      _id: new Date().getTime().toString(),
-      course: cid,
-      quiz: qid
-    };
-    db.questions.push(newQuestion);
-    res.status(201).json(newQuestion);
-  });
-
-  // Get all questions for a quiz
-  app.get('/api/courses/:cid/quizzes/:qid/questions', (req, res) => {
-    const { qid } = req.params;
-    const questions = db.questions.filter((q) => q.quiz === qid);
-    res.json(questions);
-  });
-
-  // Get a specific question by ID
-  app.get('/api/courses/:cid/quizzes/:qid/questions/:questionId', (req, res) => {
-    const { questionId } = req.params;
-    const question = db.questions.find((q) => q._id === questionId);
-    if (question) {
+ 
+  const createQuestion = async (req, res) => {
+    const { quizId } = req.params;
+    try {
+      const question = await dao.createQuestion(quizId, req.body);
       res.json(question);
-    } else {
-      res.sendStatus(404);
+    } catch (err) {
+      res.status(500).send(err);
     }
-  });
-
-  // Update a specific question
-  app.put('/api/courses/:cid/quizzes/:qid/questions/:questionId', (req, res) => {
-    const { questionId } = req.params;
-    const questionIndex = db.questions.findIndex((q) => q._id === questionId);
-    if (questionIndex !== -1) {
-      db.questions[questionIndex] = {
-        ...db.questions[questionIndex],
-        ...req.body,
-      };
-      res.sendStatus(204);
-    } else {
-      res.sendStatus(404);
+  }
+ 
+  const deleteQuestion = async (req, res) => {
+    try {
+      const status = await dao.deleteQuestion(req.params.questionId);
+      res.json(status);
+    } catch (err) {
+      res.status(500).send(err);
     }
-  });
-
-  // Delete a specific question
-  app.delete('/api/courses/:cid/quizzes/:qid/questions/:questionId', (req, res) => {
-    const { questionId } = req.params;
-    db.questions = db.questions.filter((q) => q._id !== questionId);
-    res.sendStatus(200);
-  });
+  }
+ 
+  const updateQuestion = async (req, res) => {
+    try {
+      const status = await dao.updateQuestion(req.params.questionId, req.body);
+      res.json(status);
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  }
+ 
+  const findAllQuestionsByQuizId = async (req, res) => {
+    const { quizId } = req.params;
+    try {
+      const questions = await dao.findAllQuestionsByQuizId(quizId);
+      res.json(questions);
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  }
+ 
+  const findQuestionById = async (req, res) => {
+    try {
+      const question = await dao.findQuestionById(req.params.questionId);
+      if (question) {
+        res.json(question);
+      } else {
+        res.sendStatus(404);
+      }
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  }
+ 
+  app.post("/api/quizzes/:quizId/questions", createQuestion);
+  app.delete("/api/questions/:questionId", deleteQuestion);
+  app.put("/api/questions/:questionId", updateQuestion);
+  app.get("/api/quizzes/:quizId/questions", findAllQuestionsByQuizId);
+  app.get("/api/questions/:questionId", findQuestionById);
 }
+ 
