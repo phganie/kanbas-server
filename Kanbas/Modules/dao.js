@@ -5,7 +5,7 @@ export const createModule = (courseId, module) => {
     delete module._id;
     const newModule = { ...module, course: courseId };
     newModule.id = new Date().getTime().toString();
-    return moduleModel.create(newModule);
+    return moduleModel.create(module);
 }
  
 export const findAllModulesbyCourseId = (courseId) =>
