@@ -31,9 +31,9 @@ export default function QuestionsRoutes(app) {
   }
  
   const findAllQuestionsByQuizId = async (req, res) => {
-    const { quizId } = req.params;
+    // const { quizId } = req.params;
     try {
-      const questions = await dao.findAllQuestionsByQuizId(quizId);
+      const questions = await dao.findAllQuestionsByQuizId();
       res.json(questions);
     } catch (err) {
       res.status(500).send(err);
@@ -52,11 +52,27 @@ export default function QuestionsRoutes(app) {
       res.status(500).send(err);
     }
   }
+
+  const getQuizDetails = async (req, res) => {
+  try {
+    const quizId = req.params.quizId;
+    const quiz = await Quiz.findById(quizId);
+    if (!quiz) {
+      return res.status(404).json({ message: 'Quiz not found' });
+    }
+    res.json(quiz);
+  } catch (error) {
+    console.error('Error fetching quiz details:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
  
   app.post("/api/quizzes/:quizId/questions", createQuestion);
   app.delete("/api/questions/:questionId", deleteQuestion);
   app.put("/api/questions/:questionId", updateQuestion);
   app.get("/api/quizzes/:quizId/questions", findAllQuestionsByQuizId);
   app.get("/api/questions/:questionId", findQuestionById);
+  app.get('/api/quizzes/:quizId', getQuizDetails); 
 }
  

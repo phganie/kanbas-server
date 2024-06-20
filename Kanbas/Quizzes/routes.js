@@ -69,4 +69,6 @@ export default function QuizzesRoutes(app) {
   app.get("/api/quizzes/:qid", findQuizById);
   app.put("/api/quizzes/:qid", updateQuiz);
   app.get("/api/courses/:cid/quizzes", findQuizzesForCourse);
+  app.get("/api/courses/:cid/quizzes/:qid", findQuizById); // Add this line
+
 }

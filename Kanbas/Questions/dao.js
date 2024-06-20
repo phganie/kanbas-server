@@ -10,7 +10,10 @@ export const deleteQuestion = (questionId) => QuestionModel.deleteOne({ _id: que
  
 export const updateQuestion = (questionId, question) => QuestionModel.updateOne({ _id: questionId }, { $set: question });
  
-export const findAllQuestionsByQuizId = (quizId) => QuestionModel.find({ quiz: quizId });
+export const findAllQuestionsByQuizId = () => QuestionModel.find();
  
-export const findQuestionById = (questionId) => QuestionModel.findById(questionId);
- 
+// export const findQuestionById = (questionId) => QuestionModel.findById(questionId);
+//  export const getQuizDetails = async (quizId) => {
+//   const response = await axios.get(`${API_URL}/quizzes/${quizId}`);
+//   return response.data;
+// };
