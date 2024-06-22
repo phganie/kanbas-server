@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 const questionSchema = mongoose.Schema(
   {
-        title: { type: String, required: true },
-      quiz: { type: String},
+    title: { type: String, required: true },
+    quiz: { type: String},
     type: {
       type: String,
       enum: ["Multiple Choice", "Fill in the Blank", "True/False"],

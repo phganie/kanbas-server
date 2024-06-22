@@ -4,7 +4,9 @@ import QuizModel from './model.js';
 export const createQuiz = async (courseId, quiz) => {
     delete quiz._id;
     const newQuiz = { ...quiz, course: courseId }
-    newQuiz.id
+    newQuiz.id = new Date().getTime().toString();
+    return QuizModel.create(quiz);
+
 }
 
 export const findAllQuizzes = async () => {

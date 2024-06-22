@@ -21,7 +21,7 @@ const quizzesSchema = mongoose.Schema(
     },
     shuffleAnswers: { type: Boolean, default: true },
     timeLimit: { type: Number, default: 20 },
-    multipleAttemps: { type: Boolean, default: false },
+    multipleAttempts: { type: Boolean, default: false },
     showCorrectAnswers: {
       type: Boolean,
       default: false,
@@ -38,6 +38,7 @@ const quizzesSchema = mongoose.Schema(
     numQuestions: { type: Number, default: 0 },
     course: { type: String, required: true },
     questions: [questionSchema],
+    attempts: {type: Number, default: 3},
   },
   { collection: "quizzes" }
 );
