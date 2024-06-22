@@ -31,11 +31,14 @@ export default function QuestionsRoutes(app) {
   }
  
   const findAllQuestionsByQuizId = async (req, res) => {
-    // const { quizId } = req.params;
     try {
-      const questions = await dao.findAllQuestionsByQuizId();
+      const { quizId } = req.params;
+      const questions = await dao.findAllQuestionsByQuizId(quizId);
+      console.log(`Finding questions for quiz ID: ${quizId}`);
       res.json(questions);
     } catch (err) {
+      console.error(`Error finding questions: ${error.message}`);
+
       res.status(500).send(err);
     }
   }

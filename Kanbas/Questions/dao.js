@@ -7,10 +7,12 @@ export const createQuestion = (quizId, question) => {
 }
  
 export const deleteQuestion = (questionId) => QuestionModel.deleteOne({ _id: questionId });
+
  
 export const updateQuestion = (questionId, question) => QuestionModel.updateOne({ _id: questionId }, { $set: question });
  
-export const findAllQuestionsByQuizId = () => QuestionModel.find();
+export const findAllQuestionsByQuizId = (qid) => QuestionModel.find({ quiz: qid});
+
  
 // export const findQuestionById = (questionId) => QuestionModel.findById(questionId);
 //  export const getQuizDetails = async (quizId) => {
