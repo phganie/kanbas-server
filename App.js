@@ -13,6 +13,7 @@ import mongoose from "mongoose";
 
 import Hello from './Hello.js';
 import QuestionsRoutes from './Kanbas/Questions/routes.js';
+import AnswerRoutes from './Kanbas/Answers/routes.js';
 
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas"
 mongoose.connect(CONNECTION_STRING);
@@ -47,6 +48,7 @@ Hello(app)
 QuizzesRoutes(app)
 QuestionsRoutes(app)
 UserRoutes(app)
+AnswerRoutes(app)
 
 app.listen(process.env.PORT || 4001)
 
