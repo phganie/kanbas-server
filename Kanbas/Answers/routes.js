@@ -14,8 +14,9 @@ export default function AnswerRoutes(app) {
 
   const updateAnswer = async (req, res) => {
       try {
-        console.log("Updating the answer for: " + userId)
-      const { userId, questionId } = req.params;
+          const { userId, questionId } = req.params;
+                  console.log("Updating the answer for: " + userId)
+
       const status = await dao.updateAnswer(userId, questionId, req.body);
       res.json(status);
     } catch (error) {
@@ -50,7 +51,7 @@ export default function AnswerRoutes(app) {
   };
 
   app.post('/api/answers/:questionId/answers', createAnswer);
-  app.put('/api/answers/:userId/:questionId', updateAnswer);
+  app.put('/api/answers/:userId/:questionId/stored', updateAnswer);
   app.get('/api/answers/:userId/:questionId', fetchAnswer);
   app.get('/api/answers/:userId/quiz/:quizId', fetchAllAnswersForQuiz);
 }

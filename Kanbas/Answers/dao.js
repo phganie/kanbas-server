@@ -7,7 +7,9 @@ export const createAnswer = (questionId, answer) => {
         questionId: questionId,
         quizId: answer.quizId,
         answers: answer.answer,
-        userId: answer.userId
+        userId: answer.userId,
+        score: answer.score,
+
     }
     newAnswer._id = new mongoose.Types.ObjectId();
 console.log("CREATE" + newAnswer.answers)
@@ -16,10 +18,16 @@ console.log("CREATE" + newAnswer.answers)
 };
 
 export const updateAnswer = (userId, questionId, answer) => {
-  return AnswerModel.updateOne(
-    { userId, questionId },
-    { $set: answer },
-    { upsert: true }
+    console.log("Updating in dao: " + answer)
+    return AnswerModel.updateOne(
+        { userId: userId, questionId: questionId },
+        {
+            $set: {
+                answers: answer.answer,
+            score: answer.score} },
+
+    console.log("Answer in dao: " + answer.answer)
+    // { upsert: true }
   );
 };
 
