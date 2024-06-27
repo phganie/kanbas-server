@@ -39,7 +39,3 @@ export const fetchAnswer = (userId, questionId) => {
 export const fetchAllAnswersForQuiz = (userId, quizId) => {
   return AnswerModel.find({ userId, quizId });
 };
-
-// export const fetchAllAnswersForQuiz = (userId, quizId) => {
-//   return AnswerModel.find({ userId, quizId });
-// };

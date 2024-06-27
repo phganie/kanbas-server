@@ -41,7 +41,8 @@ export default function AnswerRoutes(app) {
   };
 
   const fetchAllAnswersForQuiz = async (req, res) => {
-    try {
+      try {
+        console.log("Fetching answers")
       const { userId, quizId } = req.params;
       const answers = await dao.fetchAllAnswersForQuiz(userId, quizId);
       res.json(answers);
